@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Card } from '../ui/card'
 import { Button } from '../ui/button'
 import {
@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
 
-export const Header = () => {
+export const Header: FC = () => {
   return (
     <Card className="flex items-center justify-between p-6">
       <Sheet>
@@ -49,6 +49,7 @@ export const Header = () => {
           </div>
         </SheetContent>
       </Sheet>
+
       <h1 className="text-lg font-semibold">
         <span className="text-primary">FSW</span> Store
       </h1>
