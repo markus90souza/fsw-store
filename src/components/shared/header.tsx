@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTrigger,
@@ -20,6 +21,9 @@ import {
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Separator } from '../ui/separator'
+import Link from 'next/link'
+
+import { Cart } from '@/components/cart'
 
 export const Header: FC = () => {
   const handleSignIn = async () => {
@@ -83,31 +87,61 @@ export const Header: FC = () => {
                 Acessar conta
               </Button>
             )}
-            <Button variant={'outline'} className="w-full justify-start gap-2">
-              <HomeIcon size={16} />
-              Inicio
-            </Button>
+            <SheetClose asChild>
+              <Link href={'/'}>
+                <Button
+                  variant={'outline'}
+                  className="w-full justify-start gap-2"
+                >
+                  <HomeIcon size={16} />
+                  Inicio
+                </Button>
+              </Link>
+            </SheetClose>
 
-            <Button variant={'outline'} className="w-full justify-start gap-2">
-              <PercentIcon size={16} />
-              Ofertas
-            </Button>
-
-            <Button variant={'outline'} className="w-full justify-start gap-2">
-              <ListOrdered size={16} />
-              Catalogo
-            </Button>
+            <SheetClose asChild>
+              <Link href={'/offers'}>
+                <Button
+                  variant={'outline'}
+                  className="w-full justify-start gap-2"
+                >
+                  <PercentIcon size={16} />
+                  Ofertas
+                </Button>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href={'/catalog'}>
+                <Button
+                  variant={'outline'}
+                  className="w-full justify-start gap-2"
+                >
+                  <ListOrdered size={16} />
+                  Catalogo
+                </Button>
+              </Link>
+            </SheetClose>
           </div>
         </SheetContent>
       </Sheet>
 
-      <h1 className="text-lg font-semibold">
-        <span className="text-primary">FSW</span> Store
-      </h1>
+      <Link href="/">
+        <h1 className="text-lg font-semibold">
+          <span className="text-primary">FSW</span> Store
+        </h1>
+      </Link>
 
-      <Button size="icon" variant={'outline'}>
-        <ShoppingCartIcon />
-      </Button>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline">
+            <ShoppingCartIcon />
+          </Button>
+        </SheetTrigger>
+
+        <SheetContent>
+          <Cart />
+        </SheetContent>
+      </Sheet>
     </Card>
   )
 }
