@@ -1,18 +1,15 @@
 import { PrismaClient } from '@prisma/client'
 
-declare global {
-  // eslint-disable-next-line no-var
-  var cachedPrisma: PrismaClient
-}
-
-let _prisma: PrismaClient
+let prisma: PrismaClient
 if (process.env.NODE_ENV === 'production') {
-  _prisma = new PrismaClient()
+  prisma = new PrismaClient()
 } else {
-  if (!global.cachedPrisma) {
-    global.cachedPrisma = new PrismaClient()
+  const globalWithPrisma = global as typeof globalThis & {
+    prisma: PrismaClient
   }
-  _prisma = global.cachedPrisma
+  if (!globalWithPrisma.prisma) {
+    globalWithPrisma.prisma = new PrismaClient()
+  }
+  prisma = globalWithPrisma.prisma
 }
-
-export const prisma = _prisma
+export { prisma }
